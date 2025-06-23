@@ -61,16 +61,28 @@ function createServer() {
       const { title, amount, date } = data;
 
       if (!title || !amount || !date) {
-        res.statusCode = 404;
+        res.statusCode = 400;
         res.end('Not valid form!');
 
         return;
       }
 
-      fs.writeFileSync('db/expense.json', jsonData, () => {
+      // fs.writeFileSync('db/expense.json', jsonData, () => {
+      //   res.statusCode = 500;
+      //   res.end('Failed to write expense.json');
+      // });
+
+      try {
+        fs.writeFileSync('db/expense.json', jsonData);
+      } catch (err) {
         res.statusCode = 500;
         res.end('Failed to write expense.json');
-      });
+
+        return;
+      }
+
+      res.setHeader('Content-type', 'application/json');
+      res.end(jsonData);
 
       res.setHeader('Content-type', 'application/json');
       res.end(jsonData);
