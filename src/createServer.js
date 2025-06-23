@@ -84,9 +84,6 @@ function createServer() {
       res.setHeader('Content-type', 'application/json');
       res.end(jsonData);
 
-      res.setHeader('Content-type', 'application/json');
-      res.end(jsonData);
-
       return;
     }
 
